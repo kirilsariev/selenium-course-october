@@ -21,6 +21,10 @@ pipeline {
                 bat 'mvn -Dtestng.dtd.http=true clean test'
             }
         }
+        stage('Generate Allure Report') {
+            echo 'Generating Report'
+            bat 'mvn allure:report'
+        }
     }
     post {
         always {

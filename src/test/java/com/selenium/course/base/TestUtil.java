@@ -1,12 +1,13 @@
 package com.selenium.course.base;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -17,11 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TestUtil {
+
     private String url;
     private int implicitWait;
     public WebDriver driver;
 
-    @BeforeSuite
+    @BeforeSuite(description = "Reading configuration properties.")
     public void readConfigProperties() {
         try(FileInputStream configFile = new FileInputStream("src/test/resources/config.properties")){
             Properties config = new Properties();
@@ -35,13 +37,13 @@ public class TestUtil {
         }
     }
 
-    @BeforeTest
+    @BeforeTest(description = "Setting up browser and loading URL.")
     public void initTest() {
         setupBrowserDriver();
         loadUrl();
     }
 
-    @AfterTest
+    @AfterTest(description = "Closing browser.")
     public void tearDownDriver() {
         driver.quit();
     }
@@ -53,5 +55,10 @@ public class TestUtil {
 
     private void loadUrl(){
         driver.get(url);
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] saveScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
