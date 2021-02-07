@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -39,7 +38,7 @@ public class WaitTests {
     }
 
     @Test
-    public void executeSimpleTest() throws InterruptedException {
+    public void executeWaitTest() {
         driver.get("https://www.saucedemo.com/");
 
         WebElement username = driver.findElement(By.id("user-name"));
